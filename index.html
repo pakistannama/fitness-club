@@ -1,9 +1,447 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FITNESS CLUB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--orange:#E85D26;--black:#0e0e0e;--dark:#1a1a1a;--white:#ffffff;--off-white:#f9f6f2;--gray:#6b6b6b;--light-gray:#ececec;--font-display:'Bebas Neue',sans-serif;--font-body:'DM Sans',sans-serif}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);background:var(--white);color:var(--black);overflow-x:hidden}
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.06);transition:box-shadow .3s}
+    nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.08)}
+    .nav-logo{font-family:var(--font-display);font-size:26px;letter-spacing:2px;color:var(--black);text-decoration:none}
+    .nav-logo span{color:var(--orange)}
+    .nav-links{display:flex;gap:36px;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--black);font-size:14px;font-weight:500;letter-spacing:.5px;transition:color .2s}
+    .nav-links a:hover{color:var(--orange)}
+    .nav-right{display:flex;align-items:center;gap:20px}
+    .nav-phone{font-size:13px;color:var(--gray);text-decoration:none}
+    .btn-primary{background:var(--orange);color:var(--white);padding:10px 24px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:.5px;text-decoration:none;transition:background .2s,transform .2s;display:inline-block}
+    .btn-primary:hover{background:#c94d1c;transform:translateY(-1px)}
+    .btn-outline{border:1.5px solid var(--black);color:var(--black);padding:10px 24px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:.5px;text-decoration:none;transition:all .2s;display:inline-block}
+    .btn-outline:hover{background:var(--black);color:var(--white)}
+    .btn-outline-white{border:1.5px solid rgba(255,255,255,.4);color:var(--white);padding:10px 24px;border-radius:4px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;display:inline-block}
+    .btn-outline-white:hover{background:rgba(255,255,255,.1)}
+    .hero{min-height:100vh;padding:140px 48px 80px;display:flex;align-items:center;background:var(--off-white);position:relative;overflow:hidden}
+    .hero::after{content:'';position:absolute;top:-80px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(232,93,38,.07) 0%,transparent 70%);pointer-events:none}
+    .hero-content{max-width:640px;animation:fadeUp .8s ease both}
+    .hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--orange);margin-bottom:20px}
+    .hero h1{font-family:var(--font-display);font-size:clamp(60px,8vw,100px);line-height:.95;letter-spacing:1px;color:var(--black);margin-bottom:28px}
+    .hero h1 span{color:var(--orange)}
+    .hero p{font-size:17px;line-height:1.7;color:var(--gray);max-width:500px;margin-bottom:40px;font-weight:300}
+    .hero-btns{display:flex;gap:16px;flex-wrap:wrap}
+    .hero-image{position:absolute;right:0;top:0;bottom:0;width:44%;overflow:hidden}
+    .hero-image img{width:100%;height:100%;object-fit:cover}
+    .hero-image::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--off-white) 0%,transparent 35%);z-index:1}
+    .ticker{background:var(--orange);padding:14px 0;overflow:hidden;white-space:nowrap}
+    .ticker-track{display:inline-flex;animation:ticker 28s linear infinite}
+    .ticker-item{font-family:var(--font-display);font-size:15px;letter-spacing:3px;color:var(--white);padding:0 40px}
+    .ticker-dot{color:rgba(255,255,255,.4);padding:0 8px}
+    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .section-label{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--orange);margin-bottom:14px}
+    .section-title{font-family:var(--font-display);font-size:clamp(36px,5vw,60px);letter-spacing:1px;line-height:1.0;color:var(--black);margin-bottom:16px}
+    .section-sub{font-size:16px;color:var(--gray);line-height:1.7;max-width:520px;font-weight:300}
+
+    /* STACKING CARDS */
+    .stack-section{background:var(--white);padding-top:100px}
+    .stack-header{padding:0 48px;margin-bottom:60px}
+    .stack-card{position:sticky;top:72px;height:calc(100vh - 72px);display:flex;align-items:stretch;overflow:hidden;will-change:transform}
+    .stack-card-inner{display:grid;grid-template-columns:1fr 1fr;width:100%}
+    .stack-card:nth-child(even) .stack-card-inner{direction:rtl}
+    .stack-card:nth-child(even) .stack-card-inner>*{direction:ltr}
+    .stack-card-img{position:relative;overflow:hidden}
+    .stack-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+    .stack-card:hover .stack-card-img img{transform:scale(1.03)}
+    .stack-card-tag{position:absolute;top:28px;left:28px;background:var(--orange);color:var(--white);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:2px;z-index:2}
+    .stack-card-body{padding:80px 72px;display:flex;flex-direction:column;justify-content:center}
+    .stack-card-1 .stack-card-body{background:var(--off-white)}
+    .stack-card-2 .stack-card-body{background:var(--black);color:var(--white)}
+    .stack-card-3 .stack-card-body{background:var(--orange);color:var(--white)}
+    .stack-card-4 .stack-card-body{background:var(--dark);color:var(--white)}
+    .stack-card-num{font-family:var(--font-display);font-size:100px;line-height:1;opacity:.07;margin-bottom:-20px;letter-spacing:-2px}
+    .stack-card-2 .stack-card-num,.stack-card-3 .stack-card-num,.stack-card-4 .stack-card-num{color:var(--white)}
+    .stack-card-lbl{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;margin-bottom:14px;opacity:.6}
+    .stack-card-1 .stack-card-lbl{color:var(--orange);opacity:1}
+    .stack-card-body h2{font-family:var(--font-display);font-size:clamp(36px,4vw,54px);letter-spacing:1px;line-height:1.0;margin-bottom:20px}
+    .stack-card-body p{font-size:16px;line-height:1.75;font-weight:300;margin-bottom:16px;max-width:440px}
+    .stack-card-1 .stack-card-body p{color:var(--gray)}
+    .stack-card-2 .stack-card-body p{color:rgba(255,255,255,.6)}
+    .stack-card-3 .stack-card-body p{color:rgba(255,255,255,.85)}
+    .stack-card-4 .stack-card-body p{color:rgba(255,255,255,.6)}
+    .card-features{list-style:none;margin-bottom:36px}
+    .card-features li{font-size:14px;padding:6px 0 6px 18px;position:relative;font-weight:400}
+    .card-features li::before{content:'—';position:absolute;left:0;font-size:11px}
+    .stack-card-1 .card-features li{color:var(--gray)}
+    .stack-card-1 .card-features li::before{color:var(--orange)}
+    .stack-card-2 .card-features li{color:rgba(255,255,255,.6)}
+    .stack-card-2 .card-features li::before{color:rgba(255,255,255,.3)}
+    .stack-card-3 .card-features li{color:rgba(255,255,255,.85)}
+    .stack-card-3 .card-features li::before{color:rgba(255,255,255,.5)}
+    .stack-card-4 .card-features li{color:rgba(255,255,255,.6)}
+    .stack-card-4 .card-features li::before{color:rgba(255,255,255,.3)}
+    .card-meta{display:flex;gap:32px;flex-wrap:wrap;padding-top:28px;border-top:1px solid rgba(0,0,0,.08)}
+    .stack-card-2 .card-meta,.stack-card-3 .card-meta,.stack-card-4 .card-meta{border-top-color:rgba(255,255,255,.12)}
+    .card-meta-item span:first-child{display:block;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;opacity:.45;margin-bottom:4px}
+    .card-meta-item span:last-child{font-size:15px;font-weight:500}
+
+    .about{background:var(--black);color:var(--white);padding:120px 48px}
+    .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+    .about .section-title{color:var(--white)}
+    .about-text{font-size:16px;line-height:1.8;color:rgba(255,255,255,.6);font-weight:300;margin-bottom:24px}
+    .about-btns{display:flex;gap:16px;margin-top:36px;flex-wrap:wrap}
+    .about-image{border-radius:8px;overflow:hidden;height:540px;position:relative}
+    .about-image img{width:100%;height:100%;object-fit:cover}
+    .about-caption{position:absolute;bottom:0;left:0;right:0;padding:28px;background:linear-gradient(to top,rgba(0,0,0,.85),transparent)}
+    .about-caption strong{display:block;color:var(--white);font-size:15px}
+    .about-caption span{color:rgba(255,255,255,.5);font-size:13px}
+    .features{background:var(--white);padding:100px 48px}
+    .features-header{text-align:center;margin-bottom:64px}
+    .features-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--light-gray);border-radius:8px;overflow:hidden}
+    .feature-item{padding:44px 32px;border-right:1px solid var(--light-gray);transition:background .3s}
+    .feature-item:last-child{border-right:none}
+    .feature-item:hover{background:var(--off-white)}
+    .feature-num{font-family:var(--font-display);font-size:42px;color:var(--orange);opacity:.25;margin-bottom:16px}
+    .feature-item h4{font-size:15px;font-weight:600;margin-bottom:10px}
+    .feature-item p{font-size:13px;color:var(--gray);line-height:1.65}
+    .stats{background:var(--orange);padding:80px 48px}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;text-align:center}
+    .stat-num{font-family:var(--font-display);font-size:76px;color:var(--white);line-height:1;margin-bottom:8px}
+    .stat-label{font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.65)}
+    .testimonials{background:var(--off-white);padding:100px 48px}
+    .test-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:24px}
+    .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .test-card{background:var(--white);border-radius:8px;padding:36px;border:1px solid rgba(0,0,0,.06)}
+    .test-card.dark{background:var(--black)}
+    .test-quote{font-size:15px;line-height:1.75;color:var(--gray);margin-bottom:28px;font-style:italic;font-weight:300}
+    .test-card.dark .test-quote{color:rgba(255,255,255,.65)}
+    .test-author{display:flex;align-items:center;gap:12px}
+    .test-avatar{width:44px;height:44px;border-radius:50%;background:var(--light-gray);overflow:hidden;flex-shrink:0}
+    .test-avatar img{width:100%;height:100%;object-fit:cover}
+    .test-name{font-size:14px;font-weight:600}
+    .test-card.dark .test-name{color:var(--white)}
+    .test-role{font-size:12px;color:var(--gray)}
+    .test-card.dark .test-role{color:rgba(255,255,255,.4)}
+    .faq{background:var(--white);padding:100px 48px}
+    .faq-inner{max-width:760px;margin:0 auto}
+    .faq-header{text-align:center;margin-bottom:60px}
+    .faq-header .section-sub{margin:0 auto}
+    .faq-item{border-bottom:1px solid var(--light-gray);padding:26px 0}
+    .faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:20px}
+    .faq-q h4{font-size:16px;font-weight:500}
+    .faq-icon{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--light-gray);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;color:var(--orange);transition:transform .3s}
+    .faq-item.open .faq-icon{transform:rotate(45deg)}
+    .faq-ans{max-height:0;overflow:hidden;transition:max-height .4s ease}
+    .faq-item.open .faq-ans{max-height:200px}
+    .faq-ans p{font-size:15px;color:var(--gray);line-height:1.7;padding-top:14px;font-weight:300}
+    .cta-banner{background:var(--black);padding:110px 48px;text-align:center}
+    .cta-banner h2{font-family:var(--font-display);font-size:clamp(42px,6vw,76px);color:var(--white);letter-spacing:2px;margin-bottom:16px}
+    .cta-banner h2 span{color:var(--orange)}
+    .cta-banner p{color:rgba(255,255,255,.5);font-size:16px;margin-bottom:40px;font-weight:300}
+    footer{background:var(--dark);padding:64px 48px 32px}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:32px}
+    .footer-brand-desc{font-size:14px;color:rgba(255,255,255,.4);line-height:1.7;margin-top:16px;max-width:260px;font-weight:300}
+    .footer-col h5{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:20px}
+    .footer-col ul{list-style:none}
+    .footer-col li{margin-bottom:12px}
+    .footer-col a{text-decoration:none;font-size:14px;color:rgba(255,255,255,.55);transition:color .2s}
+    .footer-col a:hover{color:var(--orange)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+    .footer-bottom p{font-size:13px;color:rgba(255,255,255,.22)}
+    .footer-socials{display:flex;gap:16px}
+    .footer-socials a{font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s}
+    .footer-socials a:hover{color:var(--orange)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--black);border-radius:2px}
+    @media(max-width:1024px){.stack-card-inner{grid-template-columns:1fr}.stack-card-img{height:40vh}.stack-card-body{padding:48px 40px}.features-grid{grid-template-columns:repeat(2,1fr)}.footer-top{grid-template-columns:1fr 1fr}}
+    @media(max-width:768px){nav{padding:0 24px}.nav-links,.nav-phone{display:none}.hamburger{display:flex}.hero{padding:100px 24px 60px}.hero-image{display:none}.stack-section,.about,.features,.testimonials,.faq{padding:60px 24px}.stack-header{padding:0 24px}.about-inner{grid-template-columns:1fr;gap:48px}.stats{padding:60px 24px}.stats-grid{grid-template-columns:repeat(2,1fr)}.test-grid{grid-template-columns:1fr}.features-grid{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr;gap:32px}.cta-banner{padding:70px 24px}footer{padding:48px 24px 24px}}
+  </style>
 </head>
 <body>
-  <h1>FITNESS CLUB — Coming Soon</h1>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">FITNESS<span>CLUB</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="programs.html">Programs</a></li>
+    <li><a href="pricing.html">Pricing Plans</a></li>
+    <li><a href="about.html">About Us</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="tel:+1234567890" class="nav-phone">+123 456 7890</a>
+    <a href="contact.html" class="btn-primary">Join Us</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <p class="hero-eyebrow">Find your strength</p>
+    <h1>Come for the <span>Gains</span> Stay for the People</h1>
+    <p>Join a community that loves fitness, movement and good energy. We train together, push each other and enjoy the freedom of a healthy lifestyle. No pressure, just passion, progress and great company.</p>
+    <div class="hero-btns">
+      <a href="#programs" class="btn-primary">See our Programs</a>
+      <a href="contact.html" class="btn-outline">Talk with us</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900&q=80" alt="Fitness"/>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">STRENGTH TRAINING</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">COMMUNITY WORKOUTS</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">REAL PROGRESS</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">INJURY-FREE GUIDANCE</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">SOCIAL FITNESS</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">EXPERT COACHING</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">STRENGTH TRAINING</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">COMMUNITY WORKOUTS</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">REAL PROGRESS</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">INJURY-FREE GUIDANCE</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">SOCIAL FITNESS</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">EXPERT COACHING</span><span class="ticker-dot">✦</span>
+  </div>
+</div>
+
+<section class="stack-section" id="programs">
+  <div class="stack-header reveal">
+    <p class="section-label">What we offer</p>
+    <h2 class="section-title">Discover our Programs</h2>
+    <p class="section-sub">Explore a selection of carefully curated programs designed to challenge, build, and inspire.</p>
+  </div>
+  <div class="cards-sticky-wrap">
+    <div class="stack-card stack-card-1">
+      <div class="stack-card-inner">
+        <div class="stack-card-img">
+          <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=900&q=80" alt="Beginner"/>
+          <span class="stack-card-tag">Beginner</span>
+        </div>
+        <div class="stack-card-body">
+          <div class="stack-card-num">01</div>
+          <p class="stack-card-lbl">Starter Level</p>
+          <h2>Starter Fit</h2>
+          <p>Perfect for those just beginning their fitness journey. Build a strong foundation through guided bodyweight movements and progressive routines.</p>
+          <ul class="card-features">
+            <li>Perfect for complete beginners</li>
+            <li>Gentle bodyweight training</li>
+            <li>Build foundation strength</li>
+            <li>Beginner-friendly sessions</li>
+          </ul>
+          <div class="card-meta">
+            <div class="card-meta-item"><span>Sessions</span><span>3x / week</span></div>
+            <div class="card-meta-item"><span>Duration</span><span>45 min</span></div>
+            <div class="card-meta-item"><span>Level</span><span>Beginner</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="stack-card stack-card-2">
+      <div class="stack-card-inner">
+        <div class="stack-card-img">
+          <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=900&q=80" alt="Intermediate"/>
+          <span class="stack-card-tag">Intermediate</span>
+        </div>
+        <div class="stack-card-body">
+          <div class="stack-card-num">02</div>
+          <p class="stack-card-lbl">Next Level</p>
+          <h2>Power Build</h2>
+          <p>Combine strength and cardio in structured sessions. Progressive overload principles ensure you keep getting stronger every week.</p>
+          <ul class="card-features">
+            <li>Strength &amp; cardio combined</li>
+            <li>Progressive overload method</li>
+            <li>Ideal for mid-week sessions</li>
+            <li>Balanced mix of training styles</li>
+          </ul>
+          <div class="card-meta">
+            <div class="card-meta-item"><span>Sessions</span><span>4x / week</span></div>
+            <div class="card-meta-item"><span>Duration</span><span>60 min</span></div>
+            <div class="card-meta-item"><span>Level</span><span>Intermediate</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="stack-card stack-card-3">
+      <div class="stack-card-inner">
+        <div class="stack-card-img">
+          <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=900&q=80" alt="Advanced"/>
+          <span class="stack-card-tag">Advanced</span>
+        </div>
+        <div class="stack-card-body">
+          <div class="stack-card-num">03</div>
+          <p class="stack-card-lbl">Peak Performance</p>
+          <h2>Apex Force</h2>
+          <p>High intensity training designed for athletes who demand peak performance. Advanced techniques and challenging sessions for real results.</p>
+          <ul class="card-features">
+            <li>High intensity training</li>
+            <li>Advanced techniques</li>
+            <li>Peak performance focus</li>
+            <li>Skill-building sessions</li>
+          </ul>
+          <div class="card-meta">
+            <div class="card-meta-item"><span>Sessions</span><span>5x / week</span></div>
+            <div class="card-meta-item"><span>Duration</span><span>75 min</span></div>
+            <div class="card-meta-item"><span>Level</span><span>Advanced</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="stack-card stack-card-4">
+      <div class="stack-card-inner">
+        <div class="stack-card-img">
+          <img src="https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=900&q=80" alt="Elite"/>
+          <span class="stack-card-tag">Elite</span>
+        </div>
+        <div class="stack-card-body">
+          <div class="stack-card-num">04</div>
+          <p class="stack-card-lbl">Signature Program</p>
+          <h2>Elite Circuit</h2>
+          <p>Our signature elite program. Full-body circuits, competition prep, and immersive sessions crafted for athletes who refuse to stop improving.</p>
+          <ul class="card-features">
+            <li>Full-body circuit training</li>
+            <li>Competition preparation</li>
+            <li>Signature club program</li>
+            <li>Designed for high performance</li>
+          </ul>
+          <div class="card-meta">
+            <div class="card-meta-item"><span>Sessions</span><span>6x / week</span></div>
+            <div class="card-meta-item"><span>Duration</span><span>90 min</span></div>
+            <div class="card-meta-item"><span>Level</span><span>Elite</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="about-inner">
+    <div class="reveal">
+      <p class="section-label">Our story</p>
+      <h2 class="section-title">Fitness experiences that make a difference</h2>
+      <p class="about-text">Fitness isn't something you master alone. Progress comes from community, accountability, and the energy you get from others who love movement just as much as you do.</p>
+      <p class="about-text">We shape the sessions. You focus on consistency. Every workout has a purpose — structure and expertise turn effort into lasting results.</p>
+      <div class="about-btns">
+        <a href="programs.html" class="btn-primary">See Programs</a>
+        <a href="pricing.html" class="btn-outline-white">See Pricing</a>
+      </div>
+    </div>
+    <div class="about-image reveal">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=80" alt="Founder"/>
+      <div class="about-caption">
+        <strong>Alex Morgan</strong>
+        <span>Founder of FITNESS CLUB</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="features-header reveal">
+    <p class="section-label">Why choose us</p>
+    <h2 class="section-title">We shape the sessions,<br>you focus on consistency</h2>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature-item"><div class="feature-num">01</div><h4>Our Programs</h4><p>Curated workouts through varied intensity — designed for real, measurable progress.</p></div>
+    <div class="feature-item"><div class="feature-num">02</div><h4>The Community</h4><p>A collective built on shared discipline. You train supported, motivated, and accountable.</p></div>
+    <div class="feature-item"><div class="feature-num">03</div><h4>Guided Progression</h4><p>Every session has a purpose. Structure and experience turn effort into progress.</p></div>
+    <div class="feature-item"><div class="feature-num">04</div><h4>Expert Coaching</h4><p>Certified coaches guiding every session. Movement becomes grounding and results follow.</p></div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stats-grid">
+    <div class="reveal"><div class="stat-num" data-target="500">0</div><div class="stat-label">Members</div></div>
+    <div class="reveal"><div class="stat-num" data-target="8">0</div><div class="stat-label">Years Active</div></div>
+    <div class="reveal"><div class="stat-num" data-target="12">0</div><div class="stat-label">Unique Programs</div></div>
+    <div class="reveal"><div class="stat-num" data-target="20">0</div><div class="stat-label">Training Hours K+</div></div>
+  </div>
+</div>
+
+<section class="testimonials">
+  <div class="test-header reveal">
+    <div><p class="section-label">Member stories</p><h2 class="section-title">What our members say</h2></div>
+    <a href="contact.html" class="btn-outline">Get in touch</a>
+  </div>
+  <div class="test-grid">
+    <div class="test-card dark reveal">
+      <p class="test-quote">"Joining the club has completely changed how I approach fitness. The structure, the people, and the programs create an experience that feels intentional and motivating every time."</p>
+      <div class="test-author"><div class="test-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt=""/></div><div><p class="test-name">William Harris</p><p class="test-role">Member of FITNESS CLUB</p></div></div>
+    </div>
+    <div class="test-card reveal">
+      <p class="test-quote">"Joining this club changed my entire approach to fitness. Every session leaves me sharper — mentally and physically."</p>
+      <div class="test-author"><div class="test-avatar" style="background:#e5e5e5"></div><div><p class="test-name">Elena M.</p><p class="test-role">Member of 2 years</p></div></div>
+    </div>
+    <div class="test-card reveal">
+      <p class="test-quote">"The discipline here is unmatched. Every workout feels like a shared purpose. I've grown more in six months than in years on my own."</p>
+      <div class="test-author"><div class="test-avatar" style="background:#e5e5e5"></div><div><p class="test-name">Jonathan R.</p><p class="test-role">Member of 4 years</p></div></div>
+    </div>
+    <div class="test-card reveal">
+      <p class="test-quote">"There's something rare about this group. No noise, no ego — just clean, intentional effort. The programs are genuinely premium."</p>
+      <div class="test-author"><div class="test-avatar" style="background:#e5e5e5"></div><div><p class="test-name">Aisha K.</p><p class="test-role">Member of 2 years</p></div></div>
+    </div>
+    <div class="test-card reveal">
+      <p class="test-quote">"I come for the workouts but stay for the community. The club blends performance and personal growth in a refined way."</p>
+      <div class="test-author"><div class="test-avatar" style="background:#e5e5e5"></div><div><p class="test-name">Marcus V.</p><p class="test-role">Member of 3 years</p></div></div>
+    </div>
+    <div class="test-card reveal">
+      <p class="test-quote">"Every training session feels like a retreat. Challenging, elevating, beautifully structured. The most valuable hour of my day."</p>
+      <div class="test-author"><div class="test-avatar" style="background:#e5e5e5"></div><div><p class="test-name">Sofia L.</p><p class="test-role">Member of 4 years</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="faq-inner">
+    <div class="faq-header reveal">
+      <p class="section-label">Got questions?</p>
+      <h2 class="section-title">Everything you need to know</h2>
+      <p class="section-sub">Common questions about FITNESS CLUB membership and programs.</p>
+    </div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)"><h4>What experience level is required to join?</h4><div class="faq-icon">+</div></div><div class="faq-ans"><p>We welcome fitness enthusiasts of all levels. Our programs range from beginner-friendly sessions to advanced elite circuits.</p></div></div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)"><h4>Do I need to sign up for specific sessions?</h4><div class="faq-icon">+</div></div><div class="faq-ans"><p>Yes. Each session is scheduled in advance, and members reserve a spot through our weekly schedule.</p></div></div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)"><h4>Are sessions guided or self-directed?</h4><div class="faq-icon">+</div></div><div class="faq-ans"><p>Most sessions are guided by experienced coaches. You can also train independently using our program guides.</p></div></div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)"><h4>What should I bring to a training session?</h4><div class="faq-icon">+</div></div><div class="faq-ans"><p>Proper training shoes, water bottle, and workout-appropriate clothing. We handle everything else.</p></div></div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)"><h4>Can I try a session before becoming a member?</h4><div class="faq-icon">+</div></div><div class="faq-ans"><p>Yes. We offer one complimentary trial session so you can experience the atmosphere before committing.</p></div></div>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <h2>Train With <span>Intention</span></h2>
+  <p>Carefully curated programs and a community that pushes you forward</p>
+  <a href="contact.html" class="btn-primary" style="font-size:15px;padding:14px 40px">Join the club</a>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="index.html" class="nav-logo" style="color:white">FITNESS<span>CLUB</span></a>
+      <p class="footer-brand-desc">Intentional fitness experiences built around community and consistency.</p>
+    </div>
+    <div class="footer-col"><h5>Pages</h5><ul><li><a href="index.html">Home</a></li><li><a href="programs.html">Programs</a></li><li><a href="about.html">About us</a></li><li><a href="pricing.html">Pricing plans</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><h5>Contact</h5><ul><li><a href="tel:+1234567890">+123 456 7890</a></li><li><a href="mailto:hi@fitnessclub.com">hi@fitnessclub.com</a></li></ul></div>
+    <div class="footer-col"><h5>Follow Us</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">YouTube</a></li><li><a href="#">Twitter / X</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 FITNESS CLUB. All rights reserved.</p>
+    <div class="footer-socials"><a href="#">Instagram</a><a href="#">YouTube</a><a href="#">Twitter</a></div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20)});
+const obs=new IntersectionObserver((e)=>{e.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*80)})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const sObs=new IntersectionObserver((e)=>{e.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('[data-target]').forEach(el=>{const t=+el.dataset.target;let c=0;const s=t/50;const ti=setInterval(()=>{c+=s;if(c>=t){el.textContent=t+'+';clearInterval(ti)}else el.textContent=Math.floor(c)},30)});sObs.unobserve(e.target)}})},{threshold:.3});
+const sEl=document.querySelector('.stats');if(sEl)sObs.observe(sEl);
+function toggleFaq(el){const item=el.parentElement;const open=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!open)item.classList.add('open')}
+function toggleMenu(){const l=document.querySelector('.nav-links');const v=l.style.display==='flex';l.style.cssText=v?'':'display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:white;padding:28px 24px;border-bottom:1px solid #eee;z-index:999;gap:20px'}
+</script>
 </body>
 </html>
