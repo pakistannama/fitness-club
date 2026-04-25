@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us — FITNESS CLUB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--orange:#E85D26;--black:#0e0e0e;--dark:#1a1a1a;--white:#ffffff;--off-white:#f9f6f2;--gray:#6b6b6b;--light-gray:#ececec;--font-display:'Bebas Neue',sans-serif;--font-body:'DM Sans',sans-serif}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);background:var(--white);color:var(--black);overflow-x:hidden}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.06);transition:box-shadow .3s}
+    nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.08)}
+    .nav-logo{font-family:var(--font-display);font-size:26px;letter-spacing:2px;color:var(--black);text-decoration:none}
+    .nav-logo span{color:var(--orange)}
+    .nav-links{display:flex;gap:36px;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--black);font-size:14px;font-weight:500;letter-spacing:.5px;transition:color .2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--orange)}
+    .nav-right{display:flex;align-items:center;gap:20px}
+    .nav-phone{font-size:13px;color:var(--gray);text-decoration:none}
+    .btn-primary{background:var(--orange);color:var(--white);padding:10px 24px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:.5px;text-decoration:none;transition:background .2s,transform .2s;display:inline-block}
+    .btn-primary:hover{background:#c94d1c;transform:translateY(-1px)}
+    .btn-outline{border:1.5px solid var(--black);color:var(--black);padding:10px 24px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:.5px;text-decoration:none;transition:all .2s;display:inline-block}
+    .btn-outline:hover{background:var(--black);color:var(--white)}
+    .btn-outline-white{border:1.5px solid rgba(255,255,255,.4);color:var(--white);padding:10px 24px;border-radius:4px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;display:inline-block}
+    .btn-outline-white:hover{background:rgba(255,255,255,.1)}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--black);border-radius:2px}
+
+    /* HERO */
+    .page-hero{min-height:90vh;padding:140px 48px 80px;display:flex;align-items:center;background:var(--black);position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1400&q=80') center/cover no-repeat;opacity:.18}
+    .page-hero-content{position:relative;z-index:1;max-width:700px;animation:fadeUp .8s ease both}
+    .hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--orange);margin-bottom:20px}
+    .page-hero h1{font-family:var(--font-display);font-size:clamp(60px,8vw,100px);line-height:.95;letter-spacing:1px;color:var(--white);margin-bottom:28px}
+    .page-hero h1 span{color:var(--orange)}
+    .page-hero p{font-size:18px;line-height:1.7;color:rgba(255,255,255,.65);max-width:560px;margin-bottom:40px;font-weight:300}
+
+    /* SPONSORS TICKER */
+    .sponsors{background:var(--off-white);padding:28px 0;overflow:hidden;border-bottom:1px solid var(--light-gray)}
+    .sponsors-inner{display:flex;align-items:center;gap:0}
+    .sponsors-label{padding:0 48px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray);white-space:nowrap;flex-shrink:0}
+    .sponsors-track-wrap{overflow:hidden;flex:1}
+    .sponsors-track{display:inline-flex;animation:ticker 20s linear infinite;gap:60px;align-items:center}
+    .sponsor-name{font-family:var(--font-display);font-size:18px;letter-spacing:3px;color:var(--light-gray);white-space:nowrap;transition:color .2s}
+    .sponsor-name:hover{color:var(--orange)}
+    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* SECTIONS */
+    .section-label{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--orange);margin-bottom:14px}
+    .section-title{font-family:var(--font-display);font-size:clamp(36px,5vw,60px);letter-spacing:1px;line-height:1.0;color:var(--black);margin-bottom:16px}
+    .section-sub{font-size:16px;color:var(--gray);line-height:1.7;font-weight:300}
+
+    /* INTRO */
+    .intro{padding:120px 48px;background:var(--white)}
+    .intro-inner{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start}
+    .intro-text h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,44px);line-height:1.1;letter-spacing:.5px;margin-bottom:24px;max-width:540px}
+    .intro-text p{font-size:16px;color:var(--gray);line-height:1.8;font-weight:300;margin-bottom:20px}
+    .founder-card{background:var(--off-white);border-radius:8px;overflow:hidden;position:relative}
+    .founder-img{height:460px;overflow:hidden}
+    .founder-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+    .founder-card:hover .founder-img img{transform:scale(1.03)}
+    .founder-info{padding:28px 32px}
+    .founder-info strong{display:block;font-size:17px;font-weight:600;margin-bottom:4px}
+    .founder-info span{font-size:13px;color:var(--gray)}
+
+    /* STORY TABS */
+    .story{padding:0 48px 120px;background:var(--white)}
+    .story-tabs{display:flex;gap:0;border-bottom:1px solid var(--light-gray);margin-bottom:60px}
+    .story-tab{padding:16px 32px;font-size:14px;font-weight:500;color:var(--gray);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s}
+    .story-tab.active{color:var(--orange);border-bottom-color:var(--orange)}
+    .story-tab:hover{color:var(--black)}
+    .story-panel{display:none;animation:fadeUp .4s ease both}
+    .story-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .story-panel-text p{font-size:16px;color:var(--gray);line-height:1.8;font-weight:300;margin-bottom:20px}
+    .story-panel-img{border-radius:8px;overflow:hidden;height:400px}
+    .story-panel-img img{width:100%;height:100%;object-fit:cover}
+
+    /* HOW WE TRAIN */
+    .how{background:var(--black);padding:120px 48px;color:var(--white)}
+    .how .section-title{color:var(--white)}
+    .how-header{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:80px}
+    .how-header p{font-size:16px;color:rgba(255,255,255,.55);line-height:1.8;font-weight:300}
+    .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);border-radius:8px;overflow:hidden}
+    .how-item{background:var(--black);padding:48px 40px;transition:background .3s}
+    .how-item:hover{background:#1f1f1f}
+    .how-num{font-family:var(--font-display);font-size:48px;color:var(--orange);opacity:.35;margin-bottom:20px;line-height:1}
+    .how-item h4{font-size:18px;font-weight:600;color:var(--white);margin-bottom:12px}
+    .how-item p{font-size:14px;color:rgba(255,255,255,.5);line-height:1.7;font-weight:300}
+
+    /* VALUES */
+    .values{padding:120px 48px;background:var(--off-white)}
+    .values-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:64px;flex-wrap:wrap;gap:24px}
+    .values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+    .value-card{background:var(--white);border-radius:8px;padding:40px 32px;border:1px solid var(--light-gray);transition:transform .3s,box-shadow .3s}
+    .value-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,.06)}
+    .value-icon{width:48px;height:48px;background:var(--orange);border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:20px}
+    .value-card h4{font-size:18px;font-weight:600;margin-bottom:12px}
+    .value-card p{font-size:14px;color:var(--gray);line-height:1.7}
+
+    /* TESTIMONIALS */
+    .testimonials{background:var(--white);padding:100px 48px}
+    .test-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:24px}
+    .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .test-card{background:var(--off-white);border-radius:8px;padding:36px;border:1px solid rgba(0,0,0,.05)}
+    .test-card.dark{background:var(--black)}
+    .test-quote{font-size:15px;line-height:1.75;color:var(--gray);margin-bottom:28px;font-style:italic;font-weight:300}
+    .test-card.dark .test-quote{color:rgba(255,255,255,.65)}
+    .test-author{display:flex;align-items:center;gap:12px}
+    .test-avatar{width:44px;height:44px;border-radius:50%;background:var(--light-gray);overflow:hidden;flex-shrink:0}
+    .test-avatar img{width:100%;height:100%;object-fit:cover}
+    .test-name{font-size:14px;font-weight:600}
+    .test-card.dark .test-name{color:var(--white)}
+    .test-role{font-size:12px;color:var(--gray)}
+    .test-card.dark .test-role{color:rgba(255,255,255,.4)}
+
+    /* CTA */
+    .cta-banner{background:var(--orange);padding:110px 48px;text-align:center}
+    .cta-banner h2{font-family:var(--font-display);font-size:clamp(42px,6vw,76px);color:var(--white);letter-spacing:2px;margin-bottom:16px}
+    .cta-banner p{color:rgba(255,255,255,.75);font-size:16px;margin-bottom:40px;font-weight:300}
+    .btn-white{background:var(--white);color:var(--orange);padding:14px 40px;border-radius:4px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;transition:all .2s}
+    .btn-white:hover{background:var(--off-white);transform:translateY(-1px)}
+
+    /* FOOTER */
+    footer{background:var(--dark);padding:64px 48px 32px}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:32px}
+    .footer-brand-desc{font-size:14px;color:rgba(255,255,255,.4);line-height:1.7;margin-top:16px;max-width:260px;font-weight:300}
+    .footer-col h5{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:20px}
+    .footer-col ul{list-style:none}
+    .footer-col li{margin-bottom:12px}
+    .footer-col a{text-decoration:none;font-size:14px;color:rgba(255,255,255,.55);transition:color .2s}
+    .footer-col a:hover{color:var(--orange)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+    .footer-bottom p{font-size:13px;color:rgba(255,255,255,.22)}
+    .footer-socials{display:flex;gap:16px}
+    .footer-socials a{font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s}
+    .footer-socials a:hover{color:var(--orange)}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+
+    @media(max-width:1024px){.intro-inner,.story-panel.active,.how-header{grid-template-columns:1fr;gap:48px}.values-grid{grid-template-columns:repeat(2,1fr)}.how-grid{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr 1fr}}
+    @media(max-width:768px){nav{padding:0 24px}.nav-links,.nav-phone{display:none}.hamburger{display:flex}.page-hero{padding:100px 24px 60px}.intro,.story,.how,.values,.testimonials{padding:60px 24px}.cta-banner{padding:70px 24px}footer{padding:48px 24px 24px}.test-grid{grid-template-columns:1fr}.values-grid{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr;gap:32px}}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">FITNESS<span>CLUB</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="programs.html">Programs</a></li>
+    <li><a href="pricing.html">Pricing Plans</a></li>
+    <li><a href="about.html" class="active">About Us</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="tel:+1234567890" class="nav-phone">+123 456 7890</a>
+    <a href="contact.html" class="btn-primary">Join Us</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <p class="hero-eyebrow">An exclusive community</p>
+    <h1>Train with <span>Purpose</span></h1>
+    <p>Founded to create a space where dedicated fitness enthusiasts could connect beyond the noise. We believe in simplicity, discipline, and shared experiences that challenge and ground us.</p>
+    <a href="contact.html" class="btn-primary">Join the Club</a>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<div class="sponsors">
+  <div class="sponsors-inner">
+    <span class="sponsors-label">Supported by 200+ sponsors</span>
+    <div class="sponsors-track-wrap">
+      <div class="sponsors-track">
+        <span class="sponsor-name">NIKE</span>
+        <span class="sponsor-name">ADIDAS</span>
+        <span class="sponsor-name">UNDER ARMOUR</span>
+        <span class="sponsor-name">REEBOK</span>
+        <span class="sponsor-name">PUMA</span>
+        <span class="sponsor-name">GYMSHARK</span>
+        <span class="sponsor-name">LULULEMON</span>
+        <span class="sponsor-name">MYPROTEIN</span>
+        <span class="sponsor-name">NIKE</span>
+        <span class="sponsor-name">ADIDAS</span>
+        <span class="sponsor-name">UNDER ARMOUR</span>
+        <span class="sponsor-name">REEBOK</span>
+        <span class="sponsor-name">PUMA</span>
+        <span class="sponsor-name">GYMSHARK</span>
+        <span class="sponsor-name">LULULEMON</span>
+        <span class="sponsor-name">MYPROTEIN</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<section class="intro">
+  <div class="intro-inner">
+    <div class="intro-text reveal">
+      <p class="section-label">About Us</p>
+      <h2>Welcome to FITNESS CLUB — where movement meets intention.</h2>
+      <p>We believe fitness should be more than reps and sets. It should ground you, challenge you, and connect you to both your goals — and the people you train alongside.</p>
+      <p>Inspired by discipline, guided by structure. Our approach blends modern training methodology with a raw, intentional approach to physical development. We value simplicity, presence, and the quiet strength that comes from moving with purpose.</p>
+      <a href="contact.html" class="btn-primary" style="margin-top:16px">Get in touch</a>
+    </div>
+    <div class="founder-card reveal">
+      <div class="founder-img">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=80" alt="Founder"/>
+      </div>
+      <div class="founder-info">
+        <strong>Alex Morgan</strong>
+        <span>Founder of FITNESS CLUB</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY TABS -->
+<section class="story">
+  <div class="story-tabs">
+    <div class="story-tab active" onclick="switchTab(this,'story')">Our Story</div>
+    <div class="story-tab" onclick="switchTab(this,'mission')">Our Mission</div>
+    <div class="story-tab" onclick="switchTab(this,'vision')">Our Vision</div>
+  </div>
+
+  <div class="story-panel active" id="tab-story">
+    <div class="story-panel-text reveal">
+      <p class="section-label">How it started</p>
+      <h2 class="section-title">Born from a passion for fitness</h2>
+      <p>FITNESS CLUB was born from a deep appreciation for training, community, and purposeful movement. Founded by experienced coaches with years of guiding and training behind them, the club began with a simple idea: to create a space where fitness felt focused, grounded, and shared.</p>
+      <p>What started as a small group has grown into a collective built around curated programs, structured sessions, and mutual respect for the craft of fitness. Each experience is designed with intention — balancing physical challenge, technical development, and human connection.</p>
+    </div>
+    <div class="story-panel-img reveal">
+      <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" alt="Our Story"/>
+    </div>
+  </div>
+
+  <div class="story-panel" id="tab-mission">
+    <div class="story-panel-text reveal">
+      <p class="section-label">What drives us</p>
+      <h2 class="section-title">A higher standard for fitness</h2>
+      <p>Our mission is to create fitness experiences that reconnect people with movement, discipline, and each other. Through thoughtfully designed programs and a welcoming community, we aim to set a higher standard for how group training can feel.</p>
+      <p>We believe structure and simplicity create space for growth — physically, mentally, and collectively. Every session is an opportunity to build resilience, refine technique, and move with purpose.</p>
+    </div>
+    <div class="story-panel-img reveal">
+      <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=80" alt="Our Mission"/>
+    </div>
+  </div>
+
+  <div class="story-panel" id="tab-vision">
+    <div class="story-panel-text reveal">
+      <p class="section-label">Where we're going</p>
+      <h2 class="section-title">A culture of consistency</h2>
+      <p>We envision a fitness culture where progress is measured in consistency, clarity, and connection. By combining intentional program design, experienced guidance, and dedicated community sessions, we help members develop a sustainable, grounded relationship with fitness.</p>
+      <p>FITNESS CLUB exists to create long-term value for its members — not through competition or excess, but through shared discipline, presence, and carefully chosen paths forward.</p>
+    </div>
+    <div class="story-panel-img reveal">
+      <img src="https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=800&q=80" alt="Our Vision"/>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE TRAIN -->
+<section class="how">
+  <div class="how-header">
+    <div class="reveal">
+      <p class="section-label">How we train</p>
+      <h2 class="section-title">Structure, safety, and community</h2>
+    </div>
+    <p class="reveal">Weekly sessions, small-group training, and community-led events form the rhythm of our club. Every session is structured, safe, and designed to elevate both your technique and your connection to the fitness community.</p>
+  </div>
+  <div class="how-grid">
+    <div class="how-item reveal">
+      <div class="how-num">01</div>
+      <h4>Small Groups</h4>
+      <p>For focus and quality. Smaller numbers keep every session intentional and allow for closer pacing, awareness, and connection between members and coaches.</p>
+    </div>
+    <div class="how-item reveal">
+      <div class="how-num">02</div>
+      <h4>Experienced Coaches</h4>
+      <p>For structure and safety. Our coaches set the tone, maintain consistency, and ensure every member moves with confidence and correct form.</p>
+    </div>
+    <div class="how-item reveal">
+      <div class="how-num">03</div>
+      <h4>Clear Program Standards</h4>
+      <p>For predictable, purposeful training. Each program is defined by intensity, duration, and goals — so you always know what you are preparing for.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values">
+  <div class="values-header reveal">
+    <div>
+      <p class="section-label">What we stand for</p>
+      <h2 class="section-title">Our values shape every session</h2>
+    </div>
+    <a href="pricing.html" class="btn-outline">Become a member</a>
+  </div>
+  <div class="values-grid">
+    <div class="value-card reveal">
+      <div class="value-icon">⚡</div>
+      <h4>Precision</h4>
+      <p>Stay aligned, stay intentional. We design every program, session, and experience with clarity. No unnecessary elements — only what sharpens focus and elevates performance.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-icon">🤝</div>
+      <h4>Community</h4>
+      <p>Move together, grow together. We move driven by shared discipline and mutual support. Every session strengthens not just the body, but the collective we choose to be part of.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-icon">💪</div>
+      <h4>Performance</h4>
+      <p>Progress with purpose. Progress here is about refining your own consistency and resilience. Small improvements, repeated over time, create lasting results.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-icon">🎯</div>
+      <h4>Discipline</h4>
+      <p>Show up, stay focused. Real transformation comes from consistency — not from motivation alone. We build habits that outlast any single session or goal.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="test-header reveal">
+    <div><p class="section-label">Member stories</p><h2 class="section-title">What our members say</h2></div>
+    <a href="contact.html" class="btn-outline">Get in touch</a>
+  </div>
+  <div class="test-grid">
+    <div class="test-card dark reveal">
+      <p class="test-quote">"Joining the club has completely changed how I approach fitness. The structure, the people, and the programs create an experience that feels intentional every time."</p>
+      <div class="test-author"><div class="test-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt=""/></div><div><p class="test-name">William Harris</p><p class="test-role">Member of FITNESS CLUB</p></div></div>
+    </div>
+    <div class="test-card reveal">
+      <p class="test-quote">"Every session leaves me sharper — mentally and physically. I've never trained in a more focused environment."</p>
+      <div class="test-author"><div class="test-avatar" style="background:#e5e5e5"></div><div><p class="test-name">Elena M.</p><p class="test-role">Member of 2 years</p></div></div>
+    </div>
+    <div class="test-card reveal">
+      <p class="test-quote">"The discipline here is unmatched. Every workout feels like a shared purpose. I've grown more in six months than in years on my own."</p>
+      <div class="test-author"><div class="test-avatar" style="background:#e5e5e5"></div><div><p class="test-name">Jonathan R.</p><p class="test-role">Member of 4 years</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Ready to Start Training?</h2>
+  <p>Share your details and we will reach out with the next steps</p>
+  <a href="contact.html" class="btn-white">Join the club</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="index.html" class="nav-logo" style="color:white">FITNESS<span>CLUB</span></a>
+      <p class="footer-brand-desc">Intentional fitness experiences built around community and consistency.</p>
+    </div>
+    <div class="footer-col"><h5>Pages</h5><ul><li><a href="index.html">Home</a></li><li><a href="programs.html">Programs</a></li><li><a href="about.html">About us</a></li><li><a href="pricing.html">Pricing plans</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><h5>Contact</h5><ul><li><a href="tel:+1234567890">+123 456 7890</a></li><li><a href="mailto:hi@fitnessclub.com">hi@fitnessclub.com</a></li></ul></div>
+    <div class="footer-col"><h5>Follow Us</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">YouTube</a></li><li><a href="#">Twitter / X</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 FITNESS CLUB. All rights reserved.</p>
+    <div class="footer-socials"><a href="#">Instagram</a><a href="#">YouTube</a><a href="#">Twitter</a></div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20)});
+  const obs=new IntersectionObserver((e)=>{e.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*80)})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  function switchTab(el,id){
+    document.querySelectorAll('.story-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.story-panel').forEach(p=>p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('tab-'+id).classList.add('active');
+  }
+  function toggleMenu(){const l=document.querySelector('.nav-links');const v=l.style.display==='flex';l.style.cssText=v?'':'display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:white;padding:28px 24px;border-bottom:1px solid #eee;z-index:999;gap:20px'}
+</script>
+</body>
+</html>
