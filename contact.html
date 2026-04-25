@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — FITNESS CLUB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--orange:#E85D26;--black:#0e0e0e;--dark:#1a1a1a;--white:#fff;--off-white:#f9f6f2;--gray:#6b6b6b;--light-gray:#ececec;--font-display:'Bebas Neue',sans-serif;--font-body:'DM Sans',sans-serif}
+    html{scroll-behavior:smooth}body{font-family:var(--font-body);background:var(--white);color:var(--black);overflow-x:hidden}
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);transition:box-shadow .3s}
+    nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.08)}
+    .nav-logo{font-family:var(--font-display);font-size:26px;letter-spacing:2px;color:var(--black);text-decoration:none}.nav-logo span{color:var(--orange)}
+    .nav-links{display:flex;gap:36px;list-style:none}.nav-links a{text-decoration:none;color:var(--black);font-size:14px;font-weight:500;transition:color .2s}.nav-links a:hover,.nav-links a.active{color:var(--orange)}
+    .nav-right{display:flex;align-items:center;gap:20px}.nav-phone{font-size:13px;color:var(--gray);text-decoration:none}
+    .btn-primary{background:var(--orange);color:#fff;padding:10px 24px;border-radius:4px;font-size:13px;font-weight:600;text-decoration:none;transition:background .2s,transform .2s;display:inline-block}.btn-primary:hover{background:#c94d1c;transform:translateY(-1px)}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}.hamburger span{display:block;width:22px;height:2px;background:var(--black);border-radius:2px}
+    .section-label{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--orange);margin-bottom:14px}
+    .section-title{font-family:var(--font-display);font-size:clamp(36px,5vw,60px);letter-spacing:1px;line-height:1.0;color:var(--black);margin-bottom:16px}
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    /* HERO */
+    .page-hero{min-height:60vh;padding:140px 48px 80px;display:flex;align-items:center;background:var(--black);position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1400&q=80') center/cover no-repeat;opacity:.15}
+    .page-hero-content{position:relative;z-index:1;max-width:640px;animation:fadeUp .8s ease both}
+    .hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--orange);margin-bottom:20px}
+    .page-hero h1{font-family:var(--font-display);font-size:clamp(56px,7vw,88px);line-height:.95;letter-spacing:1px;color:#fff;margin-bottom:20px}
+    .page-hero h1 span{color:var(--orange)}
+    .page-hero p{font-size:17px;line-height:1.7;color:rgba(255,255,255,.6);font-weight:300}
+    /* CONTACT SECTION */
+    .contact-section{padding:100px 48px;background:var(--white)}
+    .contact-inner{display:grid;grid-template-columns:1fr 1.2fr;gap:100px;align-items:start}
+    .contact-info{position:sticky;top:100px}
+    .contact-info p{font-size:16px;color:var(--gray);line-height:1.8;font-weight:300;margin-bottom:48px}
+    .contact-details{display:flex;flex-direction:column;gap:28px;margin-bottom:48px}
+    .contact-detail{display:flex;gap:16px;align-items:flex-start}
+    .contact-icon{width:44px;height:44px;background:var(--off-white);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+    .contact-detail-text strong{display:block;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:4px}
+    .contact-detail-text a,.contact-detail-text span{font-size:15px;color:var(--black);text-decoration:none;font-weight:500}
+    .contact-detail-text a:hover{color:var(--orange)}
+    .contact-social{display:flex;gap:12px;flex-wrap:wrap}
+    .social-btn{border:1.5px solid var(--light-gray);color:var(--black);padding:9px 18px;border-radius:4px;font-size:13px;font-weight:500;text-decoration:none;transition:all .2s}
+    .social-btn:hover{border-color:var(--orange);color:var(--orange)}
+    /* FORM */
+    .contact-form-wrap{background:var(--off-white);border-radius:12px;padding:52px}
+    .form-title{font-family:var(--font-display);font-size:clamp(28px,3vw,40px);letter-spacing:1px;margin-bottom:8px}
+    .form-sub{font-size:15px;color:var(--gray);margin-bottom:36px;font-weight:300}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .form-group{display:flex;flex-direction:column;gap:8px}
+    .form-group.full{grid-column:span 2}
+    .form-group label{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)}
+    .form-group input,.form-group select,.form-group textarea{background:#fff;border:1.5px solid var(--light-gray);border-radius:6px;padding:14px 16px;font-size:15px;font-family:var(--font-body);color:var(--black);outline:none;transition:border .2s;width:100%}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--orange)}
+    .form-group textarea{resize:vertical;min-height:120px}
+    .form-submit{background:var(--orange);color:#fff;border:none;padding:16px 40px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s,transform .2s;margin-top:8px;letter-spacing:.5px}
+    .form-submit:hover{background:#c94d1c;transform:translateY(-1px)}
+    .form-note{font-size:12px;color:var(--gray);margin-top:12px}
+    /* SUCCESS */
+    .form-success{display:none;background:#fff;border:1.5px solid #22c55e;border-radius:8px;padding:24px;margin-top:20px;text-align:center}
+    .form-success p{color:#16a34a;font-weight:500}
+    /* CTA */
+    .cta-banner{background:var(--orange);padding:110px 48px;text-align:center}
+    .cta-banner h2{font-family:var(--font-display);font-size:clamp(42px,6vw,76px);color:#fff;letter-spacing:2px;margin-bottom:16px}
+    .cta-banner p{color:rgba(255,255,255,.75);font-size:16px;margin-bottom:0;font-weight:300}
+    /* FOOTER */
+    footer{background:var(--dark);padding:64px 48px 32px}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:32px}
+    .footer-brand-desc{font-size:14px;color:rgba(255,255,255,.4);line-height:1.7;margin-top:16px;max-width:260px;font-weight:300}
+    .footer-col h5{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:20px}
+    .footer-col ul{list-style:none}.footer-col li{margin-bottom:12px}
+    .footer-col a{text-decoration:none;font-size:14px;color:rgba(255,255,255,.55);transition:color .2s}.footer-col a:hover{color:var(--orange)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+    .footer-bottom p{font-size:13px;color:rgba(255,255,255,.22)}
+    .footer-socials{display:flex;gap:16px}
+    .footer-socials a{font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s}.footer-socials a:hover{color:var(--orange)}
+    @media(max-width:1024px){.contact-inner{grid-template-columns:1fr;gap:60px}.contact-info{position:static}.footer-top{grid-template-columns:1fr 1fr}}
+    @media(max-width:768px){nav{padding:0 24px}.nav-links,.nav-phone{display:none}.hamburger{display:flex}.page-hero{padding:100px 24px 60px}.contact-section{padding:60px 24px}.form-grid{grid-template-columns:1fr}.form-group.full{grid-column:span 1}.contact-form-wrap{padding:32px 24px}.cta-banner{padding:70px 24px}footer{padding:48px 24px 24px}.footer-top{grid-template-columns:1fr;gap:32px}}
+  </style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">FITNESS<span>CLUB</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="programs.html">Programs</a></li>
+    <li><a href="pricing.html">Pricing Plans</a></li>
+    <li><a href="about.html">About Us</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="tel:+1234567890" class="nav-phone">+123 456 7890</a>
+    <a href="contact.html" class="btn-primary">Join Us</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-content">
+    <p class="hero-eyebrow">Get in touch</p>
+    <h1>Let's Talk <span>Fitness</span></h1>
+    <p>Share your details and we'll reach out with the next steps to get you started with FITNESS CLUB.</p>
+  </div>
+</section>
+
+<section class="contact-section">
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <p class="section-label">Contact us</p>
+      <h2 class="section-title">We'd love to hear from you</h2>
+      <p>Whether you want to book a trial session, ask about our programs, or simply learn more about the club — we're here and happy to help.</p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <div class="contact-icon">📞</div>
+          <div class="contact-detail-text">
+            <strong>Phone</strong>
+            <a href="tel:+1234567890">+123 456 7890</a>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-detail-text">
+            <strong>Email</strong>
+            <a href="mailto:hi@fitnessclub.com">hi@fitnessclub.com</a>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">📍</div>
+          <div class="contact-detail-text">
+            <strong>Location</strong>
+            <span>Available in multiple cities</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-social">
+        <a href="#" class="social-btn">Instagram</a>
+        <a href="#" class="social-btn">YouTube</a>
+        <a href="#" class="social-btn">Twitter / X</a>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap reveal">
+      <h3 class="form-title">Share your details</h3>
+      <p class="form-sub">We'll reach out with the next steps.</p>
+      <div class="form-grid" id="contactForm">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Alex"/>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Morgan"/>
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" placeholder="+1 234 567 890"/>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="you@email.com"/>
+        </div>
+        <div class="form-group full">
+          <label>Location / City</label>
+          <select>
+            <option value="">Select your city</option>
+            <option>New York, NY</option>
+            <option>Los Angeles, CA</option>
+            <option>Chicago, IL</option>
+            <option>Houston, TX</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Interested In</label>
+          <select>
+            <option value="">Select a plan</option>
+            <option>Free Trial Session</option>
+            <option>Essentials — $29/mo</option>
+            <option>Growth — $59/mo</option>
+            <option>Elite — $99/mo</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Message (optional)</label>
+          <textarea placeholder="Tell us a bit about your fitness goals..."></textarea>
+        </div>
+        <div class="form-group full">
+          <button class="form-submit" onclick="submitForm()">Send Message →</button>
+          <p class="form-note">We typically respond within 24 hours.</p>
+        </div>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <p>✅ Message sent! We'll be in touch within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <h2>Train With Intention</h2>
+  <p>Carefully curated programs and a community that pushes you forward</p>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div><a href="index.html" class="nav-logo" style="color:white">FITNESS<span>CLUB</span></a><p class="footer-brand-desc">Intentional fitness experiences built around community and consistency.</p></div>
+    <div class="footer-col"><h5>Pages</h5><ul><li><a href="index.html">Home</a></li><li><a href="programs.html">Programs</a></li><li><a href="about.html">About us</a></li><li><a href="pricing.html">Pricing plans</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><h5>Contact</h5><ul><li><a href="tel:+1234567890">+123 456 7890</a></li><li><a href="mailto:hi@fitnessclub.com">hi@fitnessclub.com</a></li></ul></div>
+    <div class="footer-col"><h5>Follow Us</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">YouTube</a></li><li><a href="#">Twitter / X</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 FITNESS CLUB. All rights reserved.</p><div class="footer-socials"><a href="#">Instagram</a><a href="#">YouTube</a><a href="#">Twitter</a></div></div>
+</footer>
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20)});
+  const obs=new IntersectionObserver((e)=>{e.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*80)})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  function submitForm(){document.getElementById('formSuccess').style.display='block';document.getElementById('contactForm').style.opacity='.4';document.getElementById('contactForm').style.pointerEvents='none'}
+  function toggleMenu(){const l=document.querySelector('.nav-links');const v=l.style.display==='flex';l.style.cssText=v?'':'display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:white;padding:28px 24px;border-bottom:1px solid #eee;z-index:999;gap:20px'}
+</script>
+</body>
+</html>
